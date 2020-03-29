@@ -19,6 +19,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender selectGender;
   int heightData = 150;
+  int weightData = 60;
+  int ageData = 25;
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +36,23 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: BaseCard(
                     onTap: () => setState(() => selectGender = Gender.male),
-                    cardColor: selectGender == Gender.male
-                        ? kActiveCardColor
-                        : kInactiveCardColor,
-                    cardChild: IconContent(FontAwesomeIcons.male, 'MALE'),
+                    active: selectGender == Gender.male,
+                    cardChild: IconContent(
+                      FontAwesomeIcons.male,
+                      'MALE',
+                      active: selectGender == Gender.male,
+                    ),
                   ),
                 ),
                 Expanded(
                   child: BaseCard(
                     onTap: () => setState(() => selectGender = Gender.female),
-                    cardColor: selectGender == Gender.female
-                        ? kActiveCardColor
-                        : kInactiveCardColor,
-                    cardChild: IconContent(FontAwesomeIcons.female, 'FEMALE'),
+                    active: selectGender == Gender.female,
+                    cardChild: IconContent(
+                      FontAwesomeIcons.female,
+                      'FEMALE',
+                      active: selectGender == Gender.female,
+                    ),
                   ),
                 ),
               ],
@@ -57,7 +63,6 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: BaseCard(
-                    cardColor: kActiveCardColor,
                     cardChild: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -75,7 +80,7 @@ class _InputPageState extends State<InputPage> {
                           children: <Widget>[
                             Text(
                               '$heightData',
-                              style: TextStyle(fontSize: 35),
+                              style: kLabelNumbertyle,
                             ),
                             Text(
                               ' cm',
@@ -92,7 +97,7 @@ class _InputPageState extends State<InputPage> {
                             overlayShape:
                                 RoundSliderOverlayShape(overlayRadius: 20.0),
                             thumbShape:
-                                RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                                RoundSliderThumbShape(enabledThumbRadius: 10.0),
                           ),
                           child: Slider(
                             value: heightData.toDouble(),
@@ -115,12 +120,64 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: BaseCard(
-                    cardColor: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "WEIGHT",
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          "$weightData",
+                          style: kLabelNumbertyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            RoundIconButton(
+                              iconData: FontAwesomeIcons.minus,
+                              onPress: () => setState(
+                                  () => weightData > 0 ? weightData-- : ""),
+                            ),
+                            RoundIconButton(
+                              iconData: FontAwesomeIcons.plus,
+                              onPress: () => setState(() => weightData++),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
                   child: BaseCard(
-                    cardColor: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "AGE",
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          "$ageData",
+                          style: kLabelNumbertyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            RoundIconButton(
+                              iconData: FontAwesomeIcons.minus,
+                              onPress: () =>
+                                  setState(() => ageData > 0 ? ageData-- : ""),
+                            ),
+                            RoundIconButton(
+                              iconData: FontAwesomeIcons.plus,
+                              onPress: () => setState(() => ageData++),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -129,10 +186,9 @@ class _InputPageState extends State<InputPage> {
           Container(
             padding: EdgeInsets.only(top: 10),
             child: Text(
-              "Calculate",
+              "CALCULATE",
               textAlign: TextAlign.center,
-              style: GoogleFonts.raleway(
-                  fontSize: 24.0, letterSpacing: 2.5, color: Colors.black),
+              style: GoogleFonts.raleway(fontSize: 24.0, letterSpacing: 2.5),
             ),
             margin: EdgeInsets.only(top: 12.0),
             decoration: BoxDecoration(
@@ -144,6 +200,31 @@ class _InputPageState extends State<InputPage> {
           )
         ],
       ),
+    );
+  }
+}
+
+class RoundIconButton extends StatelessWidget {
+  final Function onPress;
+  final IconData iconData;
+
+  RoundIconButton({this.iconData, this.onPress});
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: onPress,
+      child: Icon(
+        iconData,
+        size: 14,
+      ),
+      elevation: 10.0,
+      constraints: BoxConstraints.tightFor(
+        width: 40.0,
+        height: 40.0,
+      ),
+      fillColor: kButtonRoundColor,
+      shape: CircleBorder(),
     );
   }
 }

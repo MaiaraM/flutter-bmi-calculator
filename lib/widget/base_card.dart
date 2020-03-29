@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../conts.dart';
+
 class BaseCard extends StatelessWidget {
-  final Color cardColor;
+  final bool active;
   final Widget cardChild;
   final Function onTap;
 
-  BaseCard({this.cardColor, this.cardChild, this.onTap});
+  BaseCard({this.active = true, this.cardChild, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class BaseCard extends StatelessWidget {
         child: cardChild,
         margin: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: cardColor,
+          color: active ? kActiveCardColor : kInactiveCardColor,
           borderRadius: BorderRadius.circular(8),
         ),
       ),
