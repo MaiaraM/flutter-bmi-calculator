@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'calculator.dart';
 import 'conts.dart';
 
 enum Gender {
@@ -187,10 +188,15 @@ class _InputPageState extends State<InputPage> {
           ),
           GestureDetector(
             onTap: () {
+              CalculatorBrain calBain = CalculatorBrain(heightData, weightData);
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ResultPage(),
+                  builder: (context) => ResultPage(
+                    bmi: calBain.caculateBMI(),
+                    result: calBain.getResult(),
+                  ),
                 ),
               );
             },

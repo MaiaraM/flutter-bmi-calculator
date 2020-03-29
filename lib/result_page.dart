@@ -7,6 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'conts.dart';
 
 class ResultPage extends StatelessWidget {
+  ResultPage({this.bmi, this.result});
+
+  final String result;
+  final String bmi;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +37,7 @@ class ResultPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text(
-                    'NORMAL',
+                    result,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Color(0xFF22E67B),
@@ -40,7 +45,7 @@ class ResultPage extends StatelessWidget {
                         fontWeight: FontWeight.w800),
                   ),
                   Text(
-                    '26.7',
+                    bmi,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 65, fontWeight: FontWeight.w800),
                   ),
